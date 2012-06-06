@@ -4,18 +4,18 @@
 	<script type="text/javascript" src="JSLitmus.js"></script>
 
 	<!-- include source files here... -->
-    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
-    <!-- <script src="http://documentcloud.github.com/underscore/underscore-min.js"></script> -->
-	<script type="text/javascript" src="../raphael.js"></script>
+	<script type="text/javascript" src="../build/raphael.js"></script>
 </head>
 <body>
-	<div id="graph" style="display: none"></div>
+	<div id="graph"></div>
 	<script type="text/javascript">
-		var paper = Raphael("graph", 1000, 1000)
+		var paper = Raphael("graph", 500, 500)
 		var dotSize = 6
 
 		JSLitmus.test('Draw some dots', function() {
-			paper.circle(10, 10, dotSize).attr({fill: "#888", opacity: 0.5})
+			// paper.circle(Math.random()*500, Math.random()*500, dotSize).attr({fill: "#888", opacity: 0.5});
+			// paper.circle(Math.random()*500, Math.random()*500, dotSize);
+			paper.circle(Math.random()*500, Math.random()*500, dotSize).attr({fill: "#888", opacity: 0.5});
 		});
 	</script>
 </body>
