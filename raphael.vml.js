@@ -27,7 +27,6 @@ window.Raphael.vml && function (R) {
         blurregexp = / progid:\S+Blur\([^\)]+\)/g,
         val = /-?[^,\s-]+/g,
         cssDot = "position:absolute;width:1px;height:1px",
-        zoom = 1,
         pathTypes = {path: 1, rect: 1, image: 1},
         ovalTypes = {circle: 1, ellipse: 1},
         path2vml = function (path) {
@@ -45,7 +44,7 @@ window.Raphael.vml && function (R) {
                             res += vals + map[command == "m" ? "l" : "L"];
                             vals = [];
                         }
-                        vals.push(round(value * zoom));
+                        vals.push(round(value));
                     });
                     return res + vals;
                 });
@@ -58,7 +57,7 @@ window.Raphael.vml && function (R) {
                 r = pa[i][0].toLowerCase();
                 r == "z" && (r = "x");
                 for (var j = 1, jj = p.length; j < jj; j++) {
-                    r += round(p[j] * zoom) + (j != jj - 1 ? "," : E);
+                    r += round(p[j]) + (j != jj - 1 ? "," : E);
                 }
                 res.push(r);
             }
@@ -81,8 +80,8 @@ window.Raphael.vml && function (R) {
                 y = 1,
                 flip = "",
                 dxdy,
-                kx = zoom / sx,
-                ky = zoom / sy;
+                kx = 1 / sx,
+                ky = 1 / sy;
             s.visibility = "hidden";
             if (!sx || !sy) {
                 return;
@@ -182,7 +181,7 @@ window.Raphael.vml && function (R) {
                 cy = +a.cy,
                 rx = +a.rx || +a.r || 0,
                 ry = +a.ry || +a.r || 0;
-            node.path = R.format("ar{0},{1},{2},{3},{4},{1},{4},{1}x", round((cx - rx) * zoom), round((cy - ry) * zoom), round((cx + rx) * zoom), round((cy + ry) * zoom), round(cx * zoom));
+            node.path = R.format("ar{0},{1},{2},{3},{4},{1},{4},{1}x", round((cx - rx)), round((cy - ry)), round((cx + rx)), round((cy + ry)), round(cx));
         }
         if ("clip-rect" in params) {
             var rect = Str(params["clip-rect"]).split(separator);
@@ -341,7 +340,7 @@ window.Raphael.vml && function (R) {
             res.X = a.x;
             res.Y = a.y + res.H / 2;
 
-            ("x" in params || "y" in params) && (res.path.v = R.format("m{0},{1}l{2},{1}", round(a.x * zoom), round(a.y * zoom), round(a.x * zoom) + 1));
+            ("x" in params || "y" in params) && (res.path.v = R.format("m{0},{1}l{2},{1}", round(a.x), round(a.y), round(a.x) + 1));
             var dirtyattrs = ["x", "y", "text", "font", "font-family", "font-weight", "font-style", "font-size"];
             for (var d = 0, dd = dirtyattrs.length; d < dd; d++) if (dirtyattrs[d] in params) {
                 res._.dirty = 1;
@@ -483,7 +482,7 @@ window.Raphael.vml && function (R) {
                     bbt = this.getBBox(1),
                     dx = bb.x - bbt.x,
                     dy = bb.y - bbt.y;
-                o.coordorigin = (dx * -zoom) + S + (dy * -zoom);
+                o.coordorigin = -dx + S - dy;
                 setCoords(this, 1, 1, dx, dy, 0);
             } else {
                 o.style.filter = E;
@@ -718,7 +717,7 @@ window.Raphael.vml && function (R) {
     R._engine.path = function (pathString, vml) {
         var el = createNode("shape");
         el.style.cssText = cssDot;
-        el.coordsize = zoom + S + zoom;
+        el.coordsize = "1 1";
         el.coordorigin = vml.coordorigin;
         var p = new Element(el, vml),
             attr = {fill: "none", stroke: "#000"};
@@ -808,12 +807,12 @@ window.Raphael.vml && function (R) {
         x = x || 0;
         y = y || 0;
         text = text || "";
-        path.v = R.format("m{0},{1}l{2},{1}", round(x * zoom), round(y * zoom), round(x * zoom) + 1);
+        path.v = R.format("m{0},{1}l{2},{1}", round(x), round(y), round(x) + 1);
         path.textpathok = true;
         o.string = Str(text);
         o.on = true;
         el.style.cssText = cssDot;
-        el.coordsize = zoom + S + zoom;
+        el.coordsize = "1 1";
         el.coordorigin = "0 0";
         var p = new Element(el, vml),
             attr = {
@@ -921,7 +920,7 @@ window.Raphael.vml && function (R) {
         res.height = height;
         width == +width && (width += "px");
         height == +height && (height += "px");
-        res.coordsize = zoom * 1e3 + S + zoom * 1e3;
+        res.coordsize = 1e3 + S + 1e3;
         res.coordorigin = "0 0";
         res.span = R._g.doc.createElement("span");
         res.span.style.cssText = "position:absolute;left:-9999em;top:-9999em;padding:0;margin:0;line-height:1;";
