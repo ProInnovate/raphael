@@ -732,7 +732,7 @@ window.Raphael.vml && function (R) {
         skew.on = true;
         el.appendChild(skew);
         p.skew = skew;
-        p.transform(E);
+        // p.transform(E);
         return p;
     };
     R._engine.rect = function (vml, x, y, w, h, r) {
