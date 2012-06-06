@@ -4,7 +4,7 @@ var setup = {
             core: "raphael.core.js",
             svg: "raphael.svg.js",
             vml: "raphael.vml.js",
-            eve: "/Users/sroebuck/Documents/OpenSource/eve/eve.js",
+            eve: "eve.js",
             copy: "copy.js"
         },
         output: {
