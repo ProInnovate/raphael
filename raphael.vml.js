@@ -26,7 +26,7 @@ window.Raphael.vml && function (R) {
         bites = /([clmz]),?([^clmz]*)/gi,
         blurregexp = / progid:\S+Blur\([^\)]+\)/g,
         val = /-?[^,\s-]+/g,
-        cssDot = "position:absolute;width:1;height:1",
+        cssDot = "position:absolute;width:1px;height:1px",
         zoom = 21600,
         pathTypes = {path: 1, rect: 1, image: 1},
         ovalTypes = {circle: 1, ellipse: 1},
