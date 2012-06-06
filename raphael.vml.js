@@ -27,7 +27,7 @@ window.Raphael.vml && function (R) {
         blurregexp = / progid:\S+Blur\([^\)]+\)/g,
         val = /-?[^,\s-]+/g,
         cssDot = "position:absolute;width:1px;height:1px",
-        zoom = 21600,
+        zoom = 1,
         pathTypes = {path: 1, rect: 1, image: 1},
         ovalTypes = {circle: 1, ellipse: 1},
         path2vml = function (path) {
@@ -728,10 +728,10 @@ window.Raphael.vml && function (R) {
         p.Path = E;
         setFillAndStroke(p, attr);
         vml.canvas.appendChild(el);
-        var skew = createNode("skew");
-        skew.on = true;
-        el.appendChild(skew);
-        p.skew = skew;
+        // var skew = createNode("skew");
+        // skew.on = true;
+        // el.appendChild(skew);
+        // p.skew = skew;
         // p.transform(E);
         return p;
     };
